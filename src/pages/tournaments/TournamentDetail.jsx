@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../axios";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/ToastContext";
 import { Trophy, Clock, Users, Play, CheckCircle, XCircle } from "lucide-react";
@@ -56,9 +56,7 @@ const TournamentDetail = () => {
 
   const fetchTournamentDetails = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/tournaments/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await api.get(`/tournaments/${id}`);
 
       const { tournament, leaderboard, nextLevelNumber } = response.data;
 
@@ -152,15 +150,11 @@ const TournamentDetail = () => {
     setResults(null);
 
     try {
-      const response = await axios.post(
-        `http://localhost:8080/tournaments/${id}/submit`,
+      const response = await api.post(`/tournaments/${id}/submit`,
         {
           level_id: currentLevel.id,
           code,
           languageCode: selectedLanguage,
-        },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
 
@@ -180,17 +174,7 @@ const TournamentDetail = () => {
             "You've completed the tournament!",
             "success"
           );
-          await axios.post(
-            `http://localhost:8080/tournaments/${id}/complete`,
-            {
-              completion_time: elapsedTime,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          );
+          await api.post(`/tournaments/${id}/complete`, { completion_time: elapsedTime, },);
         }
 
         setCode("");

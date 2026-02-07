@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import useState from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../../axios";
 import { useToast } from "../../contexts/ToastContext";
 import { KeyRound, ArrowLeft } from "lucide-react";
 
@@ -17,13 +17,13 @@ const ResetPassword = () => {
     e.preventDefault();
 
     if (!token) {
-      showToast("Токен отсутствует. Пожалуйста, воспользуйтесь ссылкой из письма.", "error");
+      showToast("The token is missing. Please use the link in the email.", "error");
       return;
     }
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:8080/reset/confirm", {
+      const res = await api.post("/reset/confirm", {
         token,
         newPassword,
       });
@@ -31,11 +31,11 @@ const ResetPassword = () => {
       if (res.data.status === "error") {
         showToast(res.data.message, "error");
       } else {
-        showToast("Пароль успешно изменен!", "success");
+        showToast("Password changed successfully!", "success");
         navigate("/login");
       }
     } catch (err) {
-      showToast(err.response?.data?.message || "Ошибка при сбросе пароля", "error");
+      showToast(err.response?.data?.message || "Error resetting password", "error");
     } finally {
       setLoading(false);
     }

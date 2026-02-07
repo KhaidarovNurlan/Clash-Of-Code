@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../axios";
 import { useToast } from "../../contexts/ToastContext";
-import {
-  BookOpen,
-  CheckCircle,
-  Lock,
-  ChevronRight,
-  ChevronLeft,
-} from "lucide-react";
+import { BookOpen, CheckCircle, Lock, ChevronRight, ChevronLeft,} from "lucide-react";
 import { marked } from "marked";
 import JSConfetti from "js-confetti";
 
@@ -29,10 +23,8 @@ const CourseDetail = () => {
   const fetchCourseDetails = async () => {
     try {
       const [courseResponse, progressResponse] = await Promise.all([
-        axios.get(`http://localhost:8080/courses/${id}`),
-        axios.get(`http://localhost:8080/users/courses/${id}/progress`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }),
+        api.get(`/courses/${id}`),
+        api.get(`/users/courses/${id}/progress`),
       ]);
 
       setCourse(courseResponse.data.course);
@@ -61,12 +53,7 @@ const CourseDetail = () => {
 
   const handleLessonClick = async (lesson) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/courses/${id}/lessons/${lesson.id}`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const response = await api.get(`/courses/${id}/lessons/${lesson.id}`);
 
       setCurrentLesson({
         ...response.data.lesson,
@@ -82,13 +69,7 @@ const CourseDetail = () => {
 
   const handleLessonComplete = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:8080/courses/${id}/lessons/${currentLesson.id}/complete`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const response = await api.post(`/courses/${id}/lessons/${currentLesson.id}/complete`);
 
       showToast("Lesson completed!", "success");
       confetti.addConfetti();

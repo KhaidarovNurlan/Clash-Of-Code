@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/ToastContext";
 import { AlertCircle, Trash2 } from "lucide-react";
-import axios from "axios";
+import api from "../../axios";
 
 const Dashboard = () => {
   const { user, updateProfile } = useAuth();
@@ -21,8 +21,8 @@ const Dashboard = () => {
         setLoading(true);
         try {
           const [coursesRes, tournamentsRes] = await Promise.all([
-            axios.get("http://localhost:8080/courses"),
-            axios.get("http://localhost:8080/tournaments"),
+            api.get("/courses"),
+            api.get("/tournaments"),
           ]);
           setCourses(Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.courses || []);
           setTournaments(Array.isArray(tournamentsRes.data) ? tournamentsRes.data : tournamentsRes.data.tournaments || []);
@@ -40,9 +40,7 @@ const Dashboard = () => {
     if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
 
     try {
-      await axios.delete(`http://localhost:8080/admin/${type}/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await api.delete(`/admin/${type}/${id}`);
       showToast(`${type.charAt(0).toUpperCase() + type.slice(1)} deleted successfully`, "success");
 
       if (type === "course") {
@@ -65,13 +63,7 @@ const Dashboard = () => {
     }
 
     try {
-      const response = await axios.put(
-        `http://localhost:8080/users/profile`,
-        { username: newUsername },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const response = await api.put(`/users/profile`, { username: newUsername },);
 
       await updateProfile(response.data);
       setIsEditing(false);

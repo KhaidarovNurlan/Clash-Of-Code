@@ -11,7 +11,7 @@
 * <img height="14" width="14" src="https://cdn.simpleicons.org/tailwindcss/white" /> Tailwind CSS
 * <img height="14" width="14" src="https://cdn.simpleicons.org/spring/white" /> Spring
 * <img height="14" width="14" src="https://cdn.simpleicons.org/postgresql/white" /> PostgreSQL
-* <img height="14" width="14" src="https://cdn.simpleicons.org/mailtrap/white" /> Mailtrap (Password Reset)
+* <img height="14" width="14" src="https://cdn.simpleicons.org/gmail/white" /> Gmail (Password Reset)
 * OneCompiler (Code Execution API)
 
 <h2>Getting Started</h2>
@@ -44,6 +44,13 @@
    logging.level.org.springframework.web=DEBUG
    logging.level.com.server=DEBUG
    ```
+
+3. Create `.env`
+
+   ```env
+   VITE_API_URL=...
+   ```
+
 4. Start an application
 
    ```bash

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useToast } from '../contexts/ToastContext'
 import { X, AlertCircle, CheckCircle, Info } from 'lucide-react'
 
@@ -55,12 +55,12 @@ const Toast = () => {
   }
 
   return (
-    <div 
+    <div
       className={`fixed bottom-4 right-4 z-50 transition-all duration-300 transform ${
         isExiting ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
       }`}
     >
-      <div 
+      <div
         className={`rounded-lg shadow-lg border p-4 max-w-md flex items-start ${getBgColorByType()}`}
       >
         <div className="flex-shrink-0 mr-3">
@@ -69,10 +69,10 @@ const Toast = () => {
         <div className="flex-1">
           <p className="text-white">{toast.message}</p>
         </div>
-        <button 
+        <button
           onClick={handleClose}
           className="ml-4 text-slate-400 hover:text-white focus:outline-none"
-          aria-label="Закрыть"
+          aria-label="Close"
         >
           <X size={18} />
         </button>

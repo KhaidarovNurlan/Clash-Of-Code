@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../axios";
 import { useToast } from "../../contexts/ToastContext";
 import { Plus, AlertCircle } from "lucide-react";
 import { marked } from "marked";
@@ -123,19 +123,13 @@ const CreateCourse = () => {
     setLoading(true);
 
     try {
-      const courseResponse = await axios.post(`http://localhost:8080/courses`, formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const courseResponse = await api.post(`/courses`, formData);
 
       const courseId = courseResponse.data.courseId;
 
       await Promise.all(
         lessons.map((lesson) =>
-          axios.post(`http://localhost:8080/courses/${courseId}/lessons`, lesson, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          })
+          api.post(`/courses/${courseId}/lessons`, lesson)
         )
       );
 

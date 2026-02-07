@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { Trophy, Users, ChevronRight, Filter } from "lucide-react";
+import api from "../../axios";
+import { Trophy, ChevronRight } from "lucide-react";
 
 const Tournaments = () => {
   const [tournaments, setTournaments] = useState([]);
@@ -18,7 +18,7 @@ const Tournaments = () => {
   const fetchTournaments = async () => {
     try {
       const offset = (page - 1) * limit;
-      const response = await axios.get(`http://localhost:8080/tournaments`, {
+      const response = await api.get(`/tournaments`, {
         params: {
           status: filter,
           limit,

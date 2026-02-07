@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../../axios";
 import { BookOpen, ChevronRight, Search, Filter } from "lucide-react";
 
 const Courses = () => {
@@ -19,13 +19,7 @@ const Courses = () => {
   const fetchCourses = async () => {
     try {
       const offset = (page - 1) * limit;
-      const response = await axios.get(`http://localhost:8080/courses`, {
-        params: {
-          level: selectedLevel,
-          limit,
-          offset,
-        },
-      });
+      const response = await api.get(`/courses`, {params: {level: selectedLevel, limit, offset,},});
       setCourses(response.data.courses);
       setTotalCourses(response.data.total);
       setLoading(false);

@@ -36,17 +36,16 @@ public class PasswordResetService {
             sendResetEmail(email, token);
         }
 
-        return Map.of("status", "success", "message", "Если email существует, письмо будет отправлено");
+        return Map.of("status", "success", "message", "If the email exists, the letter will be sent.");
     }
 
     private void sendResetEmail(String email, String token) {
         String resetUrl = "http://localhost:3000/reset-password?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@clashofcode.com");
         message.setTo(email);
-        message.setSubject("Сброс пароля");
-        message.setText("Для сброса пароля перейдите по ссылке: " + resetUrl);
+        message.setSubject("Password Reset");
+        message.setText("To reset your password, follow the link: " + resetUrl);
 
         mailSender.send(message);
     }

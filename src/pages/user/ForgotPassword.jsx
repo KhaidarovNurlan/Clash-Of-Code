@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../../axios";
 import { useToast } from "../../contexts/ToastContext";
 import { ArrowLeft, Send, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/reset/request", { email });
+      await api.post("/reset/request", { email });
 
       setIsSent(true);
       showToast("Reset instructions have been sent to your email!", "success");

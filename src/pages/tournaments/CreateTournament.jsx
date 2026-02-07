@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../axios";
 import { useToast } from "../../contexts/ToastContext";
-import { Trophy, Plus, AlertCircle, Code, Hash, Terminal } from "lucide-react";
+import { Plus, AlertCircle, Code, Hash, Terminal } from "lucide-react";
 
 const CreateTournament = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const CreateTournament = () => {
 
   const fetchLanguages = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/tournaments/languages`);
+      const response = await api.get(`/tournaments/languages`);
       setLanguages(response.data);
     } catch (error) {
       console.error("Error fetching languages:", error);
@@ -178,9 +178,7 @@ const CreateTournament = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`http://localhost:8080/tournaments`, formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await api.post(`/tournaments`, formData);
 
       showToast("Tournament created successfully!", "success");
       navigate(`/tournaments/${response.data.tournamentId}`);
