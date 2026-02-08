@@ -2,6 +2,9 @@
   <img alt="ClashOfCode-Logo" src="README_icon.png" weight=200 height=200 />
   <h1 padding=>Clash Of Code</h1>
 
+  [![Figma](https://img.shields.io/badge/Click_for_Figma-333333?logo=figma
+  )](https://www.figma.com/design/96HxzCo3f1FkZiD7vkp1FT/Clash-Of-Code-%7C-Learning-programming-languages-%E2%80%8B%E2%80%8Bwith-gamification-elements?node-id=0-1&t=CUKZY5Qi2xiOUnzW-1) ![Figma](https://img.shields.io/badge/MIT-License-333333)
+
 </div>
 
 <h2>Built With</h2>
