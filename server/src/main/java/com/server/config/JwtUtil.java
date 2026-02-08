@@ -20,12 +20,12 @@ public class JwtUtil {
     public String generateToken(Long userId, String role, String username) {
         Date now = new Date();
         return Jwts.builder()
-                .setSubject(username)
+                .subject(username)
                 .claim("id", userId)
                 .claim("role", role)
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + expirationMs))
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
+                .issuedAt(now)
+                .expiration(new Date(now.getTime() + expirationMs))
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
 
@@ -39,11 +39,11 @@ public class JwtUtil {
     }
 
     private Claims parse(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+        return Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     public Long extractUserId(String token) {

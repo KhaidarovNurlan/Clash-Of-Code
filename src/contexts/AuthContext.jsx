@@ -37,10 +37,12 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await api.post("/auth/login", credentials);
-      if (response.data.token) {
+      if (response.data && response.data.token) {
         localStorage.setItem("token", response.data.token);
         setUser(response.data.user);
         return response.data;
+      } else {
+        throw new Error(response.data.message || "Invalid credentials");
       }
     } catch (error) {
       throw error;

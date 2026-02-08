@@ -13,6 +13,9 @@
 * <img height="14" width="14" src="https://cdn.simpleicons.org/postgresql/white" /> PostgreSQL
 * <img height="14" width="14" src="https://cdn.simpleicons.org/gmail/white" /> Gmail (Password Reset)
 * OneCompiler (Code Execution API)
+* <img height="14" width="14" src="https://cdn.simpleicons.org/docker/white" /> Docker
+* <img height="14" width="14" src="https://cdn.simpleicons.org/apachemaven/white" /> Apache Maven
+* <img height="14" width="14" src="https://cdn.simpleicons.org/nginx/white" /> Nginx
 
 <h2>Getting Started</h2>
 
@@ -27,28 +30,15 @@
    npm i
    ```
 
-3. Create `server/src/main/resources/application-dev.properties`
+3. Create `server/.env`
 
    ```env
    DB_USERNAME=...
    DB_PASSWORD=...
    JWT_SECRET=...
    ONECOMPILER_KEY=...
-   MAILTRAP_USERNAME=...
-   MAILTRAP_PASSWORD=...
-
-   spring.jpa.show-sql=true
-   spring.sql.init.mode=always
-   spring.sql.init.platform=postgres
-
-   logging.level.org.springframework.web=DEBUG
-   logging.level.com.server=DEBUG
-   ```
-
-3. Create `.env`
-
-   ```env
-   VITE_API_URL=...
+   GMAIL_USERNAME=...
+   GMAIL_APP_PASSWORD=...
    ```
 
 4. Start an application
@@ -60,4 +50,28 @@
    ```bash
    cd server
    mvn spring-boot:run "-Dspring-boot.run.profiles=dev"
+   ```
+
+<h2>Docker</h2>
+
+1. Change host to `db` in `server/src/main/resources/application.properties`
+
+   ```env
+   spring.datasource.url=jdbc:postgresql://db:5432/clashofcode
+   ```
+
+2. Create `.env`
+
+   ```env
+   DB_USERNAME=...
+   DB_PASSWORD=...
+   JWT_SECRET=...
+   ONECOMPILER_KEY=...
+   GMAIL_USERNAME=...
+   GMAIL_APP_PASSWORD=...
+   ```
+3. Run docker-compose
+
+   ```bash
+   docker-compose up --build
    ```
