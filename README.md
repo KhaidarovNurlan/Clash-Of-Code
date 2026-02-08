@@ -52,7 +52,7 @@
 
    ```bash
    cd server
-   mvn spring-boot:run "-Dspring-boot.run.profiles=dev"
+   mvn spring-boot:run
    ```
 
 <h2>Docker</h2>
