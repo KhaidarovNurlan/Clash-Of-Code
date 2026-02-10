@@ -40,7 +40,7 @@ public class PasswordResetService {
     }
 
     private void sendResetEmail(String email, String token) {
-        String resetUrl = "http://localhost:3000/reset-password?token=" + token;
+        String resetUrl = "https://clashofcode.onrender.com/reset-password?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
